@@ -1,76 +1,54 @@
-import { useState } from "react"
-import { usePost } from "../context/PostContext";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function CreatePost() {
+const API_URL = import.meta.env.VITE_API_URL;
 
-  const [formData,setFormData] = useState({
-    title:"",
-    description:"",
-    date:"",
-    location:"",
-  });
+const CreatePost = () => {
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const [cover, setCover] = useState("");
+    const [author, setAuthor] = useState("");
+    const navigate = useNavigate();
 
-  const {post} = usePost();
 
-  const handleChangeInput = (e) => {
-    setFormData({...formData , [e.target.name]: e.target.value});
-  }
-  
-  const submitForm = (e) => {
-    e.preventDefault();
-    if(!formData.title || !formData.description || ! formData.date || !formData.location){
-      alert("Please fill all required fields")
-      return;
-    }
-    else{
-      
+    const createPost = async (postData) => {
+      try {
+          const response = await axios.post(`${API_URL}/posts/$`, postData);
+          return response.data;
+      } catch (error) {
+          const errorMessage = handleError(error);
+          console.error("Error creating post:", errorMessage);
+          return { error: errorMessage };
+      }
+  };
 
-      setFormData({
-        title:"",
-        description:"",
-        date:"",
-        location:""
-      })
-    }
-    
-  }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const newPost = { title, content, cover, author };
+        const response = await createPost(newPost);
 
-  return (
-    <div className="border-2 border-[#ff9696] w-[70%] mx-auto rounded-md p-3
-    flex items-center flex-col shadow-lg">
-        <h2 className="text-2xl font-semibold mb-5">New Post</h2>
-        <form onSubmit={submitForm} >
-        <div className="flex items-center my-4">
-          <label htmlFor="title" className="mr-12 block text-sm font-medium">title: </label>
-          <input type="text" name="title" className="p-2 rounded-md bg-[#fcebda]
-          border-2 border-[#ff9696] shadow-md ml-3 text-[#a60000]" placeholder="enter a title" 
-            value={formData.title} onChange={handleChangeInput} />
+        if (response.error) {
+            alert(response.error);
+        } else {
+            navigate("/");
+        }
+    };
+
+    return (
+        <div className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold mb-4">Create a New Post</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <input type="text" placeholder="Author" className="w-full p-2 border rounded" value={author} onChange={(e) => setAuthor(e.target.value)} required />
+                <input type="text" placeholder="Title" className="w-full p-2 border rounded" value={title} onChange={(e) => setTitle(e.target.value)} required />
+                <input type="text" placeholder="Cover Image URL" className="w-full p-2 border rounded" value={cover} onChange={(e) => setCover(e.target.value)} required />
+                <textarea placeholder="Content" className="w-full p-2 border rounded" value={content} onChange={(e) => setContent(e.target.value)} required />
+                <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700">
+                    Publish Post
+                </button>
+            </form>
         </div>
-        <div className="flex items-center my-4">
-          <label htmlFor="description" className="mr-0.5 block text-sm font-medium">description: </label>
-          <input type="text" name="description" className="p-2 rounded-md bg-[#fcebda]
-          border-2 border-[#ff9696] shadow-md ml-3 text-[#a60000]" placeholder="enter a description"
-          value={formData.description} onChange={handleChangeInput}/>
-        </div>
-        <div className="flex items-center my-4">
-          <label htmlFor="date" className="mr-11 block text-sm font-medium">date: </label>
-          <input type="date" name="date" className="p-2 rounded-md bg-[#fcebda]
-          border-2 border-[#ff9696] shadow-md ml-3 text-[#a60000] w-[200px]" value={formData.date} 
-          onChange={handleChangeInput}/>
-        </div>
-        <div className="flex items-center my-4">
-          <label htmlFor="location" className="mr-5 block text-sm font-medium">location: </label>
-          <input type="text" name="location" className="p-2 rounded-md bg-[#fcebda]
-          border-2 border-[#ff9696] shadow-md ml-3 text-[#a60000]" placeholder="enter a location" 
-          value={formData.location} onChange={handleChangeInput} />
-        </div>
-        <button type="submit" 
-        className="cursor-pointer rounded-md m-4 px-[7px] pb-[4px] pt-[2px] bg-[#ff2424] text-[#ffead7] border-2 border-[#ff2424]
-           hover:bg-[#ffead7] hover:border-[#ff2424] hover:text-[#ff2424] transition-all duration-300 ease-in">
-           Add Post</button>
-        </form>
-    </div>
-  )
-}
+    );
+};
 
-export default CreatePost
+export default CreatePost;
