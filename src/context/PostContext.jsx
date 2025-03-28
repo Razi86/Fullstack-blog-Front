@@ -7,14 +7,14 @@ const usePost = () => useContext(PostContext);
 const PostProvider = ({ children }) => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const [post, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   return (
     <PostContext.Provider
       value={{
         error,
-        post,
-        setPost,
+        posts,
+        setPosts,
       }}
     >
       {children}
