@@ -45,9 +45,6 @@ const updatePost = async (id, updatedData) => {
     }
 };
 
-
-
-
     const handleChange = (e) => {
         setPost({ ...post, [e.target.name]: e.target.value });
     };

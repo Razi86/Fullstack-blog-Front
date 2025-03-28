@@ -31,9 +31,15 @@ const PostDetail = () => {
         <span className="font-semibold text-[#5a5a5a]">Location: </span>
         {postDetail.location}
       </p>
+      {/* Added edit post link */}
+      <div>
+      <Link to={`/posts/${id}/edit`} className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600">
+          ✏️ Edit
+      </Link>
       <Link to="/" className="mt-4 inline-block text-[#ff2424] underline">
         Back to Home
       </Link>
+      </div>
     </div>
   );
 };
