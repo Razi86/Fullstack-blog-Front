@@ -3,7 +3,7 @@ import { PostProvider } from "./context/PostContext";
 import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import PostDetail from "./pages/PostDetail";
-import UpdatePost from "./pages/UpdatePost";
+import EditPost from "./pages/EditPost";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="createPost" element={<CreatePost />} />
                 <Route path="/posts/:id" element={<PostDetail />} />
-                <Route path="/updatePost/:id" element={<UpdatePost />} />
+                <Route path="/editPost/:id" element={<EditPost />} />
             </Routes>
           </main>
       </PostProvider>

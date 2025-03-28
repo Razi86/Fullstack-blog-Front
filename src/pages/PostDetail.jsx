@@ -67,7 +67,7 @@ const PostDetail = () => {
         onClick={() => deletePost(postDetail.id)}>
           Delete Post
       </button>
-      <Link to={`/updatePost/${postDetail.id}`}
+      <Link to={`/editPost/${postDetail.id}`}
         className="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700">
         Edit Post
       </Link>
