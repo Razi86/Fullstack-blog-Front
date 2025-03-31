@@ -4,6 +4,20 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+// Helper function to handle API errors
+const handleError = (error) => {
+    if (error.response) {
+        // Server responded with a status other than 2xx
+        return error.response.data.message || "Something went wrong! Please try again later.";
+    } else if (error.request) {
+        // The request was made, but no response was received
+        return "Network error! Please check your internet connection.";
+    } else {
+        // Something else caused the error
+        return error.message || "An unexpected error occurred.";
+    }
+  };
+
 const EditPost = () => {
     const { id } = useParams();
     const navigate = useNavigate();
