@@ -31,7 +31,9 @@ const EditPost = () => {
                 setError("Post not found");
                 return;
             }
-            setPost(data);
+            console.log(data);
+            
+            setPost(data[0]);
         };
         loadPost();
     }, [id]);
