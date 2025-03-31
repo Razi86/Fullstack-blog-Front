@@ -35,7 +35,7 @@ function Home() {
             <p className="text-sm px-3"> {new Date(ev.date).toLocaleDateString()}</p>
             <img src={ev.cover} alt={ev.title}/>
 
-            <Link to={`/post/${ev.id}`}>
+            <Link to={`/posts/${ev.id}`}>
               <button className="border bg-[#ff4c4c] text-[#ffead7]  hover:bg-[#ff3030] transition  p-2 w-full mt-5 cursor-pointer">
                 View post
               </button>
