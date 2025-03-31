@@ -13,7 +13,7 @@ const PostDetail = () => {
   useEffect(() => {
     const fetchOnePost = async() =>{
       try {
-        const res = await axios.get(`${APIURL}/posts/${id}`);
+        const res = await axios.get(`${APIURL}posts/${id}`);
         console.log(res)
         setPostDetail(res.data[0]);
       } catch (error) {
@@ -25,7 +25,7 @@ const PostDetail = () => {
   
   const deletePost = async(id) => {
     try {
-      await axios.delete(`${APIURL}/posts/${id}`);
+      await axios.delete(`${APIURL}posts/${id}`);
       setPosts(posts.filter((post) => {post.id !== id}));
       navigate('/');
     } catch (error) {

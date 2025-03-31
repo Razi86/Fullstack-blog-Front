@@ -41,7 +41,7 @@ const EditPost = () => {
     // Fetch a single post by ID
 const fetchPostById = async (id) => {
     try {
-        const response = await axios.get(`${API_URL}/posts/${id}`);
+        const response = await axios.get(`${API_URL}posts/${id}`);
         return response.data;
     } catch (error) {
         const errorMessage = handleError(error);
@@ -52,7 +52,7 @@ const fetchPostById = async (id) => {
 
 const updatePost = async (id, updatedData) => {
     try {
-        const response = await axios.put(`${API_URL}/posts/${id}`, updatedData);
+        const response = await axios.put(`${API_URL}posts/${id}`, updatedData);
         return response.data;
     } catch (error) {
         const errorMessage = handleError(error);
