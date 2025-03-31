@@ -4,6 +4,20 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+// Helper function to handle API errors
+const handleError = (error) => {
+    if (error.response) {
+        // Server responded with a status other than 2xx
+        return error.response.data.message || "Something went wrong! Please try again later.";
+    } else if (error.request) {
+        // The request was made, but no response was received
+        return "Network error! Please check your internet connection.";
+    } else {
+        // Something else caused the error
+        return error.message || "An unexpected error occurred.";
+    }
+  };
+
 const EditPost = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -17,7 +31,9 @@ const EditPost = () => {
                 setError("Post not found");
                 return;
             }
-            setPost(data);
+            console.log(data);
+            
+            setPost(data[0]);
         };
         loadPost();
     }, [id]);
@@ -25,7 +41,7 @@ const EditPost = () => {
     // Fetch a single post by ID
 const fetchPostById = async (id) => {
     try {
-        const response = await axios.get(`${API_URL}/posts/${id}`);
+        const response = await axios.get(`${API_URL}/${id}`);
         return response.data;
     } catch (error) {
         const errorMessage = handleError(error);
@@ -36,7 +52,7 @@ const fetchPostById = async (id) => {
 
 const updatePost = async (id, updatedData) => {
     try {
-        const response = await axios.put(`${API_URL}/posts/${id}`, updatedData);
+        const response = await axios.put(`${API_URL}/${id}`, updatedData);
         return response.data;
     } catch (error) {
         const errorMessage = handleError(error);
